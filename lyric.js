@@ -1,23 +1,59 @@
+//API token from Genius
 const CLIENT_ACCESS_TOKEN = "zyYE1qav_IA43edG-P2l4kHk-3P2flxUxBPCxXWbrSZK-1bldjj6ZDxhbY1ZM0da"
-
-function $(selector) {
+// created selector function similar to jquery
+function element(selector) {
     return document.querySelector(selector);
 }
+// function to build url with access token 
 function buildUrl(query) {
-    return `https://api.genius.com/search?q=${encodeURIComponent(query)}&access_token=${CLIENT_ACCESS_TOKEN}`;
+    return `https://api.genius.com/search?q=${query}&access_token=${CLIENT_ACCESS_TOKEN}`;
 }
-
-const queryInput = $('#query');
-const searchButton = $('#btnSearch');
-const songsContainer = $('#songsContainer');
-const errorsElement = $('#errors');
-
+// variable to store html elements
+const queryInput = element('#query');
+// focus to queryUser input
+queryInput.focus();
+const searchButton = element('#btnSearch');
+const songsContainer = element('#songsContainer');
+const errorsElement = element('#errors');
+// create click event listener
 searchButton.addEventListener('click', search);
+// this was copied straight from Bulma for active hamburger button icon for small screens
+document.addEventListener('DOMContentLoaded', () => {
 
-function callGenuisAPI(query) {
-    return fetch(buildUrl(query)).then(response => response.json()).catch(error => console.log(error));
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
+});
+
+function callGeniusAPI(queryFromUser) {
+    // using fetch API to return json or error
+    return fetch(buildUrl(queryFromUser))
+        // if response is successful, return json
+        .then(response => response.json())
+        // if error, log error
+        .catch(error => console.log(error));
 }
-function buildTemplate(data){
+// template to push data to html using Bulma classes
+function buildTemplate(data) {
     return `
     <div class="card">
         <div class="card-content">
@@ -33,52 +69,59 @@ function buildTemplate(data){
             </div>
         </div>
         <footer class="card-footer">
-            <a class="card-footer-item" href="${data.lyriclink}" target="_blank">Lyrics on Genius</a>
+            <a class="card-footer-item" href="${data.lyricLink}" target="_blank">Lyrics on Genius</a>
         <footer>
     </div>
     `
 }
-function search(event) {
+// to run when search button is clicked
+function search() {
+    // use to empty errors
     errorsElement.innerHTML = null;
-    event.preventDefault();
-
+    // value from user input
     const query = queryInput.value;
 
     if (!query) {
+        // if query is empty message displays for user
         errorsElement.innerHTML = "Input is Required"
+        queryInput.focus();
         return;
     }
-callGenuisAPI(query).then(data =>{
-    console.log(data);
-    const hits = data.response.hits;
-    const results = []
-    for(let i = 0; i < hits.length; i++){
-        const item = hits[i].result;
-        results.push(item)
-    }
-    const resultData = [];
-    for(let i = 0; i < results.length; i++){
-        const item = results[i];
 
-        const obj = {
-            title: item.title_with_featured,
-            artist: item.primary_artist.name,
-            thumbnail: item.song_art_image_thumbnail_url,
-            lyriclink: item.url
+    callGeniusAPI(query).then(data => {
+        // step 1 retrieve hits from API
+        const hits = data.response.hits;
+        // step 2 looping thru hits to find result object
+        const results = []
+        for (let i = 0; i < hits.length; i++) {
+            const item = hits[i].result;
+            results.push(item)
         }
-        resultData.push(obj);
-    }
+        // step 3 looping results to find desired info 
+        const resultData = [];
+        for (let i = 0; i < results.length; i++) {
+            const item = results[i];
+            // step 4 create objects with info
+            const obj = {
+                title: item.title_with_featured,
+                artist: item.primary_artist.name,
+                thumbnail: item.song_art_image_thumbnail_url,
+                lyricLink: item.url
+            }
+            resultData.push(obj);
+        }
+        // step 5 push result data to template 
+        const htmlArray = [];
+        for (let i = 0; i < resultData.length; i++) {
+            const item = resultData[i];
+            const template = buildTemplate(item);
+            htmlArray.push(template)
+        }
+        console.log(resultData)
+        // step 6 adds template to html songs container 
+        const html = htmlArray.join("");
+        songsContainer.innerHTML = html;
 
-    const htmlArray = [];
-    for( let i = 0; i < resultData.length; i++){
-        const item = resultData[i];
-        htmlArray.push(buildTemplate(item))
-    }
-    console.log(resultData)
-    const html = htmlArray.join("");
-    songsContainer.innerHTML = html;
-
-})
+    })
 
 }
-queryInput.value = "Hey Ya";
