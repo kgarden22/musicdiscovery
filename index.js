@@ -3,7 +3,7 @@ const Spotify = require('spotify-web-api-node');
 const spotifyApi = new Spotify({
   clientId: '39146e5690b2463780ac5fe7192bd1dd',
   clientSecret: '6cedbf355b424807933f8995cf55549c',
-  redirectUri: 'musicselect://callback'
+  redirectUri: 'http://musicselect://callback'
 });
 
 // redirect to spotify authorization URL
