@@ -35,47 +35,52 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h1 class="title has-text-danger">Search for your favorite music!</h1>
-        <form>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <div class="label has-text-white">
-                        <label>Search:</label>
-                    </div>
-                </div>
-                <div class="field-body">
-                    <div class="control">
-                        <input type="text" id="query" class="input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <div class="label">
-                    </div>
-                    <div class="field is-horizontal">
-                        <div class="field-label">
-                            <!-- Left empty for spacing -->
+    <div class="section">
+        <div class="container">
+            <h1 class="title has-text-danger">Search for your favorite music!</h1>
+            <form>
+                <div id="errors" class="errors has-text-warning"></div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <div class="label has-text-white">
+                            <label>Search:</label>
                         </div>
-                        <div class="field-body">
-                            <div class="field">
-                                <div class="control">
-                                    <button type="button" id="btnSearch" class="button is-primary">
-                                        Search
-                                    </button>
+                    </div>
+                    <div class="field-body">
+                        <div class="control">
+                            <input type="text" id="query" class="input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <div class="label">
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-label">
+                                <!-- Left empty for spacing -->
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <button type="button" id="btnSearch" class="button is-primary">
+                                            Search
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-        </form>
-        <div id="lyricContainer"></div>
+                </div>
+            </form>
+        </div>
     </div>
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
+    <div class="section">
+        <div class="container">
+            <div id="songsContainer"></div>
+        </div>
+    </div>
     <script src="lyric.js"></script>
 </body>
 
