@@ -35,43 +35,36 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <h1 class="title has-text-danger">Search for your favorite music!</h1>
-        <form>
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <div class="label has-text-white">
-                        <label>Search:</label>
-                    </div>
-                </div>
-                <div class="field-body">
-                    <div class="control">
-                        <input type="text" id="query" class="input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="field is-horizontal">
-                <div class="field-label">
-                    <div class="label has-text-white">
-                        <label>Type:</label>
-                    </div>
-                </div>
-                <div class="field-body">
-                    <div class="control">
-                        <div class="select">
-                            <select id="droptype">
-                                <option value="album">Album</option>
-                                <option value="artist">Artist</option>
-                                <option value="playlist">Playlist</option>
-                                <option value="track">Track</option>
-                                <option value="show">Show</option>
-                                <option value="episode">Episod</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!--container for entry forms  -->
+<div class="container">
+    <!-- form for user input from bulma -->
+        <div class="row"></div>
+            <h2 class="subtitle">Select a Genre</h2>
+    <!-- add drop down from bulma -->
+        <div class="select">
+            <select id="genre">
+                <option value="Rock">Rock</option>
+                <option value="Rap">Rap</option>
+                <option value="Electronic">Electronic</option>
+                <option value="Soul/R&B">Soul/R&B</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Latin">Latin</option>
+            </select>
+        </div>
+    <!-- add dropdown for song number returned -->
+        <div class="row"></div>
+            <h3 class="subtitle">Select How Many Songs You Wish to See</h3>
+    <!-- dropdown from bulma -->
+        <div class="select">
+            <select>
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+    <!-- add container for info to be returned in -->
+    <div id="return"></div>
 
             <div class="field is-horizontal">
                 <div class="field-label">
