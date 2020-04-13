@@ -2,3 +2,14 @@ html{
     background: url(./Assets/Images/james-owen-MuIvHRJbjA8-unsplash.jpg) no-repeat center fixed;
     background-size: cover;
 }
+
+#songsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+#songsContainer > div {
+    margin: 5px;
+    flex: 1 1 auto
+}
